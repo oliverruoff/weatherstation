@@ -21,4 +21,4 @@ while True:
     print("Solar: Analog Value: ", channel1.value, "Voltage: ", channel1.voltage)
     print("Wind: Analog Value: ", channel2.value, "Voltage: ", channel2.voltage)
     print("__________________________________________________________________")
-    time.sleep(0.2)
+    time.sleep(1)
