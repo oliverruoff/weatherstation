@@ -4,7 +4,6 @@ import busio
 from adafruit_bme280 import basic as adafruit_bme280
 from adafruit_ads1x15.analog_in import AnalogIn
 from adafruit_ads1x15.ads1115 import ADS1115
-from adafruit_ads1x15.ads1x15 import ADS
 
 # Initialize I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
