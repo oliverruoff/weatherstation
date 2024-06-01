@@ -51,7 +51,7 @@ This project is a DIY weather station that monitors various environmental parame
 
 | **ADS1115**        | Pin       | Connected To                  | Notes                                             |
 |--------------------|-----------|-------------------------------|---------------------------------------------------|
-| VDD                | 3.3V Pin 1| Raspberry Pi 3.3V Pin         | Powering the ADS1115                              |
+| VDD                | 5V Pin 4  | Raspberry Pi 5V Pin           | Powering the ADS1115                              |
 | GND                | GND       | Any Ground Pin                | Ground connection                                  |
 | SCL                | SCL       | GPIO 3 (SCL)                  | I2C clock line                                     |
 | SDA                | SDA       | GPIO 2 (SDA)                  | I2C data line                                      |
@@ -61,7 +61,7 @@ This project is a DIY weather station that monitors various environmental parame
 
 | **BMP280**         | Pin       | Connected To                  | Notes                                             |
 |--------------------|-----------|-------------------------------|---------------------------------------------------|
-| VIN                | Pin 4     | Raspberry Pi 5V Pin           | Powering the BMP280                                |
+| VIN                | 5V Pin 4  | Raspberry Pi 5V Pin           | Powering the BMP280                                |
 | GND                | GND       | Any Ground Pin                | Ground connection                                  |
 | SCL                | SCL       | GPIO 3 (SCL)                  | I2C clock line                                     |
 | SDA                | SDA       | GPIO 2 (SDA)                  | I2C data line                                      |
