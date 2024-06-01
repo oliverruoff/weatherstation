@@ -8,7 +8,7 @@ from adafruit_ads1x15.analog_in import AnalogIn
 i2c = busio.I2C(board.SCL, board.SDA)
  
 # Create an ADS1115 object
-ads = ADS.ADS1115(i2c)
+ads = ADS.ADS1115(i2c, address=0x76)
  
 # Define the analog input channel
 channel0 = AnalogIn(ads, ADS.P0)
@@ -20,4 +20,5 @@ while True:
     print("Battery: Analog Value: ", channel0.value, "Voltage: ", channel0.voltage)
     print("Solar: Analog Value: ", channel1.value, "Voltage: ", channel1.voltage)
     print("Wind: Analog Value: ", channel2.value, "Voltage: ", channel2.voltage)
+    print("__________________________________________________________________")
     time.sleep(0.2)
