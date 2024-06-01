@@ -8,12 +8,12 @@ from adafruit_ads1x15.analog_in import AnalogIn
 i2c = busio.I2C(board.SCL, board.SDA)
  
 # Create an ADS1115 object
-ads = ADS.ADS1115(i2c, address=0x76)
+ads = ADS.ADS1115(i2c, address=0x48)
  
 # Define the analog input channel
 channel0 = AnalogIn(ads, ADS.P0)
-channel1 = AnalogIn(ads, ADS.P0)
-channel2 = AnalogIn(ads, ADS.P0)
+channel1 = AnalogIn(ads, ADS.P1)
+channel2 = AnalogIn(ads, ADS.P2)
  
 # Loop to read the analog input continuously
 while True:
