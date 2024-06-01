@@ -1,5 +1,7 @@
 # DIY Weather Station
 
+![weatherstation](images/weatherstation_3d_render.png)
+
 ## Description
 This project is a DIY weather station that monitors various environmental parameters using different sensors. It is powered by two 18650 lithium-ion batteries and utilizes solar and wind energy for recharging. The weather station collects data such as temperature, humidity, atmospheric pressure, wind speed, and solar intensity, which can be accessed remotely.
 
@@ -35,7 +37,7 @@ This project is a DIY weather station that monitors various environmental parame
 
 ## Wiring Diagram
 
-# Wiring Connections
+### Wiring Connections
 
 | Component          | Pin       | Connected To                  | Notes                                             |
 |--------------------|-----------|-------------------------------|---------------------------------------------------|
@@ -72,4 +74,8 @@ This project is a DIY weather station that monitors various environmental parame
 
 
 ![fritzing](fritzing/weatherstation_wiring.png)
+
+## 3D Model
+
+The 3d models are created using Fusion360 and can be downloaded [here](3dmodel/).
 
