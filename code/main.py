@@ -3,7 +3,7 @@ import board
 import busio
 from adafruit_bme280 import basic as adafruit_bme280
 from adafruit_ads1x15.analog_in import AnalogIn
-from adafruit_ads1x15.ads1115 import ADS1115
+from adafruit_ads1x15.ads1115 import ADS1115 as ADS
 
 # Initialize I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -12,7 +12,7 @@ i2c = busio.I2C(board.SCL, board.SDA)
 bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c, address=0x76)
 
 # Initialize ADS1115
-ads = ADS1115(i2c)
+ads = ADS(i2c)
 chan0 = AnalogIn(ads, ADS.P0)  # Battery voltage
 chan1 = AnalogIn(ads, ADS.P1)  # Solar panel voltage
 chan2 = AnalogIn(ads, ADS.P2)  # Wind motor voltage
