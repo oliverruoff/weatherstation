@@ -11,7 +11,7 @@ class ADS1115:
         i2c = busio.I2C(board.SCL, board.SDA)
  
         # Create an ADS1115 object
-        ads = ADS.ADS1115(i2c, i2c_address)
+        ads = ADS.ADS1115(i2c, address=i2c_address)
  
         # Define the analog input channel
         self.channel0 = AnalogIn(ads, ADS.P0)
