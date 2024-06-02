@@ -1,24 +1,13 @@
-import board
 import time
-import busio
-import adafruit_ads1x15.ads1115 as ADS
-from adafruit_ads1x15.analog_in import AnalogIn
- 
-# Initialize the I2C interface
-i2c = busio.I2C(board.SCL, board.SDA)
- 
-# Create an ADS1115 object
-ads = ADS.ADS1115(i2c, address=0x48)
- 
-# Define the analog input channel
-channel0 = AnalogIn(ads, ADS.P0)
-channel1 = AnalogIn(ads, ADS.P1)
-channel2 = AnalogIn(ads, ADS.P2)
- 
+from sensors import ADS1115
+
+ads1115 = ADS1115.ADS1115(i2c_address=0x48)
+
+
 # Loop to read the analog input continuously
 while True:
-    print("Battery: Analog Value: ", channel0.value, "Voltage: ", channel0.voltage)
-    print("Solar: Analog Value: ", channel1.value, "Voltage: ", channel1.voltage)
-    print("Wind: Analog Value: ", channel2.value, "Voltage: ", channel2.voltage)
+    print("Battery Voltage: ", ads1115.get_channel_0_voltage())
+    print("Solar Voltage: ", ads1115.get_channel_1_voltage())
+    print("Wind Voltage: ", ads1115.get_channel_2_voltage())
     print("__________________________________________________________________")
     time.sleep(1)
