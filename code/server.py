@@ -23,17 +23,17 @@ def get_safe_json(data):
 @app.route('/battery', methods=['GET'])
 def get_battery_voltage():
     voltage = format_value(ads1115.get_channel_0_voltage())
-    return get_safe_json({'Battery Voltage': voltage})
+    return get_safe_json({'battery_voltage': voltage})
 
 @app.route('/solar', methods=['GET'])
 def get_solar_voltage():
     voltage = format_value(ads1115.get_channel_1_voltage())
-    return get_safe_json({'Solar Voltage': voltage})
+    return get_safe_json({'solar_voltage': voltage})
 
 @app.route('/wind', methods=['GET'])
 def get_wind_voltage():
     voltage = format_value(ads1115.get_channel_2_voltage())
-    return get_safe_json({'Wind Voltage': voltage})
+    return get_safe_json({'wind_voltage': voltage})
 
 @app.route('/bme280', methods=['GET'])
 def get_bme280_data():
