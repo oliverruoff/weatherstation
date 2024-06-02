@@ -9,7 +9,7 @@ GPIO.setup(RAIN_SENSOR_PIN, GPIO.IN)
 
 ads1115 = ADS1115.ADS1115(i2c_address=0x48)
 bme280 = BME280.BME280(i2c_address=0x76)
-rain_sensor = RainDropSensor(pin=18)
+rain_sensor = RainDropSensor.RainDropSensor(pin=18)
 
 # Function to read rain sensor
 def is_raining():
