@@ -1,2 +1,2 @@
-adafruit-circuitpython-bme280
+RPi.bme280
 adafruit-circuitpython-ads1x15
