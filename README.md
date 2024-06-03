@@ -79,3 +79,27 @@ This project is a DIY weather station that monitors various environmental parame
 
 The 3d models are created using Fusion360 and can be downloaded [here](3dmodel/).
 
+## Setting raspberry autostart services up
+
+* Make `server.py` executable
+    * $ `chmod +x server.py`
+* Copy `server.service` to `/lib/systemd/system`
+* Change `ExecStart=` command inside `*.service` accordingly to path where `server.py` is located
+* Enable daemon process
+    * $ `sudo systemctl daemon-reload`
+    * $ `sudo systemctl enable server.service`
+    * $ `sudo systemctl start server.service`
+* Enable daily reboot at 4am (to automatically fix (e.g.) networking errors)
+  * `sudo crontab -e`
+  * Enter as new line and save --> `0 4 * * * /sbin/reboot`
+
+### Useful commands for process monitoring
+
+* Check status
+    * $ `sudo systemctl status server.service`
+* Start service
+    * $ `sudo systemctl start server.service`
+* Stop service
+    * $ `sudo systemctl stop server.service`
+* Check service's log
+    * $ `sudo journalctl -f -u server.service`

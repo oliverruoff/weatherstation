@@ -1,0 +1,12 @@
+[Unit]
+Description=Weatherstation server to deploy the REST server.
+After=multi-user.target
+
+[Service]
+Type=simple
+User=vanslipon
+ExecStart=python /home/vanslipon/develop/weatherstation/code/server.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
