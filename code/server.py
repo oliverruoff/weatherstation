@@ -60,13 +60,13 @@ def get_all_data():
     rain_status = 'It is raining.' if rain_sensor.is_raining() else 'It is dry.'
 
     return get_safe_json({
-        'Battery Voltage': battery_voltage,
-        'Solar Voltage': solar_voltage,
-        'Wind Voltage': wind_voltage,
-        'Temperature': format_value(bme_data.get('temperature', 0)),
-        'Pressure': format_value(bme_data.get('pressure', 0)),
-        'Humidity': format_value(bme_data.get('humidity', 0)),
-        'Rain Status': rain_status
+        'battery_voltage': battery_voltage,
+        'solar_voltage': solar_voltage,
+        'wind_voltage': wind_voltage,
+        'temperature': format_value(bme_data.get('temperature', 0)),
+        'pressure': format_value(bme_data.get('pressure', 0)),
+        'humidity': format_value(bme_data.get('humidity', 0)),
+        'rain_status': rain_status
     })
 
 if __name__ == '__main__':
