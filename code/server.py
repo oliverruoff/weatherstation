@@ -26,7 +26,7 @@ def get_battery_voltage():
     retry_counter = 0
     while voltage == 0: # this is physically not possible -> system would be dead
         retry_counter += 1
-        print('Voltage measurement was 0, trying take another measurement, retry_counter:', retry_counter)
+        print('Voltage measurement was 0, trying to get another measurement, retry_counter:', retry_counter)
         voltage = format_value(ads1115.get_channel_0_voltage())
         if retry_counter > 2:
             return {'battery_voltage': -1}
