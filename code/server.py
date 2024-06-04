@@ -23,16 +23,37 @@ def get_safe_json(data):
 @app.route('/battery', methods=['GET'])
 def get_battery_voltage():
     voltage = format_value(ads1115.get_channel_0_voltage())
+    retry_counter = 0
+    while voltage == 0: # this is physically not possible -> system would be dead
+        retry_counter += 1
+        print('Voltage measurement was 0, trying take another measurement, retry_counter:', retry_counter)
+        voltage = format_value(ads1115.get_channel_0_voltage())
+        if retry_counter > 3:
+            return {'battery_voltage': -1}
     return get_safe_json({'battery_voltage': voltage})
 
 @app.route('/solar', methods=['GET'])
 def get_solar_voltage():
     voltage = format_value(ads1115.get_channel_1_voltage())
+    retry_counter = 0
+    while voltage == 0: # this is physically not possible -> system would be dead
+        retry_counter += 1
+        print('Voltage measurement was 0, trying take another measurement, retry_counter:', retry_counter)
+        voltage = format_value(ads1115.get_channel_1_voltage())
+        if retry_counter > 3:
+            return {'solar_voltage': -1}
     return get_safe_json({'solar_voltage': voltage})
 
 @app.route('/wind', methods=['GET'])
 def get_wind_voltage():
     voltage = format_value(ads1115.get_channel_2_voltage())
+    retry_counter = 0
+    while voltage == 0: # this is physically not possible -> system would be dead
+        retry_counter += 1
+        print('Voltage measurement was 0, trying take another measurement, retry_counter:', retry_counter)
+        voltage = format_value(ads1115.get_channel_2_voltage())
+        if retry_counter > 3:
+            return {'wind_voltage': -1}
     return get_safe_json({'wind_voltage': voltage})
 
 @app.route('/bme280', methods=['GET'])
