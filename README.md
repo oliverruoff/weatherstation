@@ -41,6 +41,12 @@ Once the ESP32 is running, it will host a server accessible within your network:
 - Access `http://<ESP32-IP>/pressure` for pressure readings.
 - Access `http://<ESP32-IP>/all` for all sensor readings in JSON format.
 
+## 3d model
+
+The .stl files can be obtained from the [3dmodel folder](/3dmodel/).
+
+![weather station rendering ](images/weather_station_rendering.png)
+
 ## Robustness and Reliability Enhancements
 
 To ensure the weather station operates reliably and can handle potential errors and system anomalies, several robust design practices and features have been implemented:
