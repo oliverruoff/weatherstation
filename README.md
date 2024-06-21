@@ -1,105 +1,73 @@
-# DIY Weather Station
+# ESP32 Weather Station
 
-![weatherstation](images/weatherstation_3d_render.png)
+## Overview
+This project involves building a weather station using the ESP32 microcontroller. The weather station is capable of measuring temperature, humidity, pressure, and various voltages (battery, solar, wind). The data is accessible through a simple HTTP server hosted on the ESP32, allowing for easy integration with other systems or monitoring platforms.
 
-## Description
-This project is a DIY weather station that monitors various environmental parameters using different sensors. It is powered by two 18650 lithium-ion batteries and utilizes solar and wind energy for recharging. The weather station collects data such as temperature, humidity, atmospheric pressure, wind speed, and solar intensity, which can be accessed remotely.
+![weather station](images/weather_Station.jpg)
 
-## Components Used
+## Hardware Requirements
+- **ESP32 Development Board**: Acts as the main controller and server host.
+- **BME280 Sensor**: Used for measuring temperature, humidity, and atmospheric pressure.
+- **ADS1115 Module**: An ADC (Analog-to-Digital Converter) used for reading voltages from various sensors.
+- **Various Sensors**:
+  - Battery voltage sensor
+  - Solar panel voltage sensor
+  - Wind sensor
+- **SoftI2C**: Connections via specific GPIO pins for I2C communication.
 
-- **1 x Raspberry Pi Zero 2 W**
-  - A compact and affordable single-board computer.
-  - [Buy here](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)
-- **2 x 18650 Lithium-Ion Batteries**
-  - Rechargeable batteries used for powering the system.
-  - [Buy here](https://www.amazon.com/18650-rechargeable-battery/s?k=18650+rechargeable+battery)
-- **2 x 5V Solar Module**
-  - Solar panels used for harvesting solar energy.
-  - [Buy here](https://www.amazon.com/5v-solar-panel/s?k=5v+solar+panel)
-- **3 x Step Up DC Converter**
-  - Boosts the voltage from the batteries to a stable level.
-  - [Buy here](https://www.amazon.com/step-up-dc-converter/s?k=step+up+dc+converter)
-- **1 x Raindrop Sensor**
-  - Detects the presence and intensity of rainfall.
-  - [Buy here](https://www.amazon.com/raindrop-sensor/s?k=raindrop+sensor)
-- **1 x ADS1115**
-  - Analog-to-Digital Converter for measuring voltage.
-  - [Buy here](https://www.amazon.com/ads1115/s?k=ads1115)
-- **1 x 18650 USB C Charging Module**
-  - Module for charging 18650 batteries via USB C.
-  - [Buy here](https://www.amazon.com/18650-usb-c-charging-module/s?k=18650+usb+c+charging+module)
-- **1 x DC Motor (used as Windmill)**
-  - Used to generate electricity from wind.
-  - [Buy here](https://www.amazon.com/dc-motor/s?k=dc+motor)
-- **1 x BMP280 (Temperature, Humidity, Pressure)**
-  - Sensor for measuring temperature, humidity, and atmospheric pressure.
-  - [Buy here](https://www.amazon.com/bmp280/s?k=bmp280)
+### Connection Diagram
+tbd
 
-## Wiring Diagram
+## Software Dependencies
+- `uasyncio`: For asynchronous handling of server requests and general concurrency.
+- `machine`: For interfacing with hardware pins and peripherals like the I2C interface.
+- `BME280`: Library to interface with the BME280 sensor.
+- `ads1x15`: Library to manage readings from the ADS1115 module.
+- `network`: For connecting the ESP32 to a WiFi network.
+- `json`: For creating JSON responses from sensor readings.
 
-### Wiring Connections
+## Setup and Configuration
+1. **Flash the ESP32**: Use your preferred method to flash the `boo.py` script onto the ESP32.
+2. **WiFi Configuration**: Change the `ssid` and `password` in the script to match your WiFi network credentials.
+3. **Sensor Calibration**: You may need to calibrate sensors, especially the ADC readings for accurate voltage measurements.
 
-| Component          | Pin       | Connected To                  | Notes                                             |
-|--------------------|-----------|-------------------------------|---------------------------------------------------|
-| **Raspberry Pi Zero 2 W** | 5V        | Step-Up DC Converter Output  | Powering the Raspberry Pi                         |
-|                    | GND       | Common Ground                 | Shared ground for all components                  |
-|                    | GPIO 18   | Raindrop Sensor Signal        | Digital input from raindrop sensor                |
-|                    | GPIO 2 (SDA) | BMP280 SDA                  | I2C data line for BMP280                          |
-|                    | GPIO 3 (SCL) | BMP280 SCL                  | I2C clock line for BMP280                         |
-|                    | GPIO 2 (SDA) | ADS1115 SDA                 | I2C data line for ADS1115                         |
-|                    | GPIO 3 (SCL) | ADS1115 SCL                 | I2C clock line for ADS1115                        |
+## Usage
+Once the ESP32 is running, it will host a server accessible within your network:
+- Access `http://<ESP32-IP>/battery` for battery voltage.
+- Access `http://<ESP32-IP>/solar` for solar voltage.
+- Access `http://<ESP32-IP>/wind` for wind sensor voltage.
+- Access `http://<ESP32-IP>/temperature` for temperature readings.
+- Access `http://<ESP32-IP>/humidity` for humidity readings.
+- Access `http://<ESP32-IP>/pressure` for pressure readings.
+- Access `http://<ESP32-IP>/all` for all sensor readings in JSON format.
 
-| **ADS1115**        | Pin       | Connected To                  | Notes                                             |
-|--------------------|-----------|-------------------------------|---------------------------------------------------|
-| VDD                | 5V Pin 4  | Raspberry Pi 5V Pin           | Powering the ADS1115                              |
-| GND                | GND       | Any Ground Pin                | Ground connection                                  |
-| SCL                | SCL       | GPIO 3 (SCL)                  | I2C clock line                                     |
-| SDA                | SDA       | GPIO 2 (SDA)                  | I2C data line                                      |
-| A0                 | Battery + | Battery Positive Terminal     | Measuring battery voltage                          |
-| A1                 | Solar +   | Solar Panel Positive Terminal | Measuring solar panel voltage                      |
-| A2                 | Wind +    | Wind Motor Positive Terminal  | Measuring wind motor voltage                       |
+## Robustness and Reliability Enhancements
 
-| **BMP280**         | Pin       | Connected To                  | Notes                                             |
-|--------------------|-----------|-------------------------------|---------------------------------------------------|
-| VIN                | 5V Pin 4  | Raspberry Pi 5V Pin           | Powering the BMP280                                |
-| GND                | GND       | Any Ground Pin                | Ground connection                                  |
-| SCL                | SCL       | GPIO 3 (SCL)                  | I2C clock line                                     |
-| SDA                | SDA       | GPIO 2 (SDA)                  | I2C data line                                      |
+To ensure the weather station operates reliably and can handle potential errors and system anomalies, several robust design practices and features have been implemented:
 
-| **Raindrop Sensor** | Pin      | Connected To                  | Notes                                             |
-|---------------------|-----------|-------------------------------|---------------------------------------------------|
-| VCC                | 3.3V/5V   | Raspberry Pi 3.3V/5V Pin      | Powering the raindrop sensor                       |
-| GND                | GND       | Any Ground Pin                | Ground connection                                  |
-| Signal             | GPIO 18   | Raspberry Pi GPIO 18          | Digital input signal                               |
+### Watchdog Timer
+A Watchdog Timer (WDT) is set to reset the ESP32 if not reset within 5 seconds, preventing system deadlocks.
+
+### Network Connectivity Checks
+The system ensures connectivity to WiFi before operations, enhancing data reliability and access.
+
+### Asynchronous Error Handling
+Asynchronous operations are used with exception handling to prevent blocking and manage errors effectively, keeping the server responsive.
+
+### Voltage Reading Retries
+Critical voltage readings, like the battery voltage, are retried multiple times to avoid false readings due to sensor glitches or temporary issues.
+
+### System Restart Mechanism
+In case of critical failures, the system automatically attempts a restart, ensuring continuous operation despite errors.
+
+These enhancements significantly improve the system's resilience to operational disruptions and data inaccuracies.
 
 
-![fritzing](fritzing/weatherstation_wiring.png)
+## Troubleshooting
+If you encounter issues:
+- Ensure all hardware connections are secure.
+- Verify that the correct libraries are installed.
+- Check the serial output from the ESP32 for error messages.
+- Ensure that the WiFi network is within range and the credentials are correct.
 
-## 3D Model
-
-The 3d models are created using Fusion360 and can be downloaded [here](3dmodel/).
-
-## Setting raspberry autostart services up
-
-* Make `server.py` executable
-    * $ `chmod +x server.py`
-* Copy `server.service` to `/lib/systemd/system`
-* Change `ExecStart=` command inside `*.service` accordingly to path where `server.py` is located
-* Enable daemon process
-    * $ `sudo systemctl daemon-reload`
-    * $ `sudo systemctl enable server.service`
-    * $ `sudo systemctl start server.service`
-* Enable daily reboot at 4am (to automatically fix (e.g.) networking errors)
-  * `sudo crontab -e`
-  * Enter as new line and save --> `0 4 * * * /sbin/reboot`
-
-### Useful commands for process monitoring
-
-* Check status
-    * $ `sudo systemctl status server.service`
-* Start service
-    * $ `sudo systemctl start server.service`
-* Stop service
-    * $ `sudo systemctl stop server.service`
-* Check service's log
-    * $ `sudo journalctl -f -u server.service`
+Feel free to contribute or suggest improvements to this project!
